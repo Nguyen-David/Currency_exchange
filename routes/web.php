@@ -12,6 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('main\sign_up');
-});
+    return view('main\sign_in');
+})->name('sign_in');
 
+Route::get('/sign_up', function () {
+    return view('main\sign_up');
+})->name('sign_up');
+
+Route::post('/sign_up_complete', 'RegistrationController@addAccount')->name('sign_up_complete');
+
+Route::get('/cabinet/{id}', 'CabinetController@show')->name('cabinet');
+
+Route::get('/edit/{id}', 'EditController@show')->name('edit');
