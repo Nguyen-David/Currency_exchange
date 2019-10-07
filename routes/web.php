@@ -21,6 +21,16 @@ Route::get('/sign_up', function () {
 
 Route::post('/sign_up_complete', 'RegistrationController@addAccount')->name('sign_up_complete');
 
-Route::get('/cabinet/{id}', 'CabinetController@show')->name('cabinet');
+//Route::group(['prefix'=>'cabinet','as'=>'cabinet.'],function () {
+    Route::post('/replenish', 'CabinetController@addMoney')->name('replenish');
+
+    Route::get('/cabinet/{id}', 'CabinetController@show')->name('cabinet');
+
+//});
+
+
+
+
+
 
 Route::get('/edit/{id}', 'EditController@show')->name('edit');

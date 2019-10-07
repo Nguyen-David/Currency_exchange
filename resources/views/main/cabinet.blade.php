@@ -18,8 +18,20 @@
                     <ul class="info-list">
                         <li class="info-list-item">{{ $user['name'].' '.$user['surname']}}</li>
                         <li class="info-list-item">{{ $user['email'] }}</li>
-                        <li class="info-list-item">На вашем счету: <strong>{{$user['money']}}</strong> грн</li>
-                        <li class="info-list-item"><button type="button" class="btn btn-light btn-replenish">Пополнить баланс</button><button type="button" class="btn btn-light">Перевести в доллары</button></li>
+                        <li class="info-list-item">Номер вашей карты: <strong>{{$user->card->card_id}}</strong></li>
+                        <li class="info-list-item">На вашем счету: <strong>{{$user->card->money}}</strong> грн</li>
+                        <li class="info-list-item">
+                            <form method="post" action="{{ route('replenish') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-light btn-replenish">Пополнить баланс</button>
+                                <input type="hidden" name="user_id" value="{{$user['id'] }}">
+                            </form>
+                            <form method="post" action="">
+                                <button type="button" class="btn btn-light">Перевести в доллары</button>
+                                <input type="hidden" name="user_id" value="{{$user['id'] }}">
+                            </form>
+                        </li>
+
                         <li class="info-list-item"><button type="button" class="btn btn-light">Перевести в евро</button></li>
                     </ul>
                 </div>
@@ -31,10 +43,9 @@
                 <div class="card-header"><h3>Курс валют</h3></div>
                 <div class="card-body">
                     <ul class="info-list">
-                        <li class="info-list-item-val">Долар - <strong>25.43</strong></li>
-                        <li class="info-list-item-val">Евро - <strong>27.43</strong></li>
-                        <li class="info-list-item-val">Рубль - <strong>2.854</strong></li>
-                        <li class="info-list-item-val">Польский злотый -  <strong>6.534</strong></li>
+                        <li class="info-list-item-val">Долар - <strong>{{ $currency[0]->buy . " / ".$currency[0]->sale }}</strong></li>
+                        <li class="info-list-item-val">Евро - <strong>{{ $currency[1]->buy. " / ".$currency[1]->sale }}</strong></li>
+                        <li class="info-list-item-val">Рубль - <strong>{{ $currency[2]->buy. " / ".$currency[2]->sale }}</strong></li>
                     </ul>
                 </div>
             </div>
