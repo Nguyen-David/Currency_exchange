@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main\sign_in');
-})->name('sign_in');
+
+
+
+Route::get('/', 'EntranceController@show')->name('sign_in');
 
 Route::get('/sign_up', function () {
     return view('main\sign_up');
@@ -22,7 +23,9 @@ Route::get('/sign_up', function () {
 Route::post('/sign_up_complete', 'RegistrationController@addAccount')->name('sign_up_complete');
 
 //Route::group(['prefix'=>'cabinet','as'=>'cabinet.'],function () {
-    Route::post('/replenish', 'CabinetController@addMoney')->name('replenish');
+    Route::post('/add_money_store', 'CabinetController@addMoneyStore')->name('add_money_store');
+    Route::get('/add_money', 'CabinetController@addMoney')->name('add_money');
+    Route::post('/transaction','TransactionController@store')->name('transaction');
 
     Route::get('/cabinet/{id}', 'CabinetController@show')->name('cabinet');
 

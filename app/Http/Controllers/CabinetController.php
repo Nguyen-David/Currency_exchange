@@ -36,7 +36,28 @@ class CabinetController extends Controller
         ]);
     }
 
-    public function addMoney(Request $request){
-        return view('main.replenish');
+    public function addMoney(){
+        return view('main.add_money');
+    }
+
+    public function addMoneyStore(Request $request){
+        $user = User::find($request->user_id);
+
+        $rules = [
+              'password' => 'same:users,password',
+        ];
+
+        $this->validate($request,$rules);
+
+//        if($user->password != $request->password){
+//            return redirect()->back()->withErrors('Пароль неверный')->withInput('user_id');
+//        }
+
+
+
+        $card = CardUser::where('user_id', $request->user_id)->first();
+        $card->money = $card->money + $request->money;
+        $card->save();
+
     }
 }

@@ -1,7 +1,16 @@
 @extends('main.layouts.header')
 
 @section('content')
+{{--    		<pre>--}}
+{{--    		{{ print_r(Session::all()) }}--}}
+{{--    		</pre>--}}
+
 <div class="wrapper-container">
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="{{ URL::asset('assets/bank.png')}}" alt="" width="100" height="100">
         <h2>Конвертор валют</h2>
@@ -21,11 +30,9 @@
                         <li class="info-list-item">Номер вашей карты: <strong>{{$user->card->card_id}}</strong></li>
                         <li class="info-list-item">На вашем счету: <strong>{{$user->card->money}}</strong> грн</li>
                         <li class="info-list-item">
-                            <form method="post" action="{{ route('replenish') }}">
-                                @csrf
+                            <a href="{{ route('add_money') }}">
                                 <button type="submit" class="btn btn-light btn-replenish">Пополнить баланс</button>
-                                <input type="hidden" name="user_id" value="{{$user['id'] }}">
-                            </form>
+                            </a>
                             <form method="post" action="">
                                 <button type="button" class="btn btn-light">Перевести в доллары</button>
                                 <input type="hidden" name="user_id" value="{{$user['id'] }}">
@@ -59,21 +66,32 @@
                     Перевести деньги на другой счет
                 </div>
                 <div class="card-body">
-                    <form method="post" action="">
+                    <form method="post" action="{{ route('transaction') }}">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $user['id'] }}">
                         <div class="form-group">
-                            <label for="amount-transfer">Введите e-mail получателя</label>
-                            <input type="email" class="form-control" id="amount-transfer" placeholder="E-mail">
+                            <label for="amount-transfer">Введите номер карты получателя</label>
+                            <input type="text" class="form-control" id="amount-transfer" placeholder="Номер карты" name="card_id" value="{{ old('card_id') }}">
                         </div>
                         <div class="form-group">
                             <label for="amount-transfer">Введите суму для перевода</label>
-                            <input type="text" class="form-control" id="amount-transfer" placeholder="Сумма">
+                            <input type="text" class="form-control" id="amount-transfer" placeholder="Сумма" name="money_transfer" value="{{ old('money_transfer') }}">
                         </div>
                         <div class="form-group">
                             <label for="password">Введите пароль</label>
-                            <input type="password" class="form-control" id="password" placeholder="Пароль">
+                            <input type="password" class="form-control" id="password" placeholder="Пароль" name="password" value="{{old('password')}}">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="commission">
+                            <input type="checkbox" class="form-check-input" id="commission" name="commision" @if(old('commission')) checked @endif>
                             <label class="form-check-label" for="commission">Оплатить комисию за получателя</label>
                         </div>
                         <button type="submit" class="btn btn-primary btn-transfer">Перевести</button>
