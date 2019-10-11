@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\CardUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,11 +15,11 @@ class TransactionController extends Controller
     //
     public function store(Request $request) {
         $request['money_transfer'] = (int) $request['money_transfer'];
-        $user = User::find($request->user_id);
+        $user = Auth::user();
 
         $messages = [
             'card_id.exists' => 'Такого :attribute пользователя нет',
-            'card_id.between' => 'Карта должна содержать :max цыфры',
+            'card_id.between' => 'Карта должна содержать :max цифры',
             'money_transfer.max' => 'Сума перевода превышает суму на вешем счёту',
             'money_transfer.numeric' => 'Сумма должна содержать только числовое значение',
             'password.same' => 'Пароль не верный'
@@ -31,6 +33,12 @@ class TransactionController extends Controller
 
         $validation = Validator::make($request->all(), $rules, $messages);
 
+        if (!Hash::check($request->password,$user->password))
+        {
+            $validation->after(function ($validation) {
+                $validation->errors()->add('password', 'Пароли не совпадают');
+            });
+        }
         if ($validation->fails())
         {
 

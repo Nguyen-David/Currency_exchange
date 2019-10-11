@@ -11,6 +11,15 @@
             {{ session()->get('message') }}
         </div>
     @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="{{ URL::asset('assets/bank.png')}}" alt="" width="100" height="100">
         <h2>Конвертор валют</h2>
@@ -21,7 +30,7 @@
             <div class="card text-white bg-primary" >
                 <div class="card-header">
                     <div class="header-data"><h3>Личные данные</h3></div>
-                    <div class="d-flex justify-content-end"><a class="edit-data" href="{{ route('edit',['id' => $user['id']]) }}">Редактировать</a></div>
+                    <div class="d-flex justify-content-end"><a class="edit-data" href="{{ route('edit') }}">Редактировать</a></div>
                 </div>
                 <div class="card-body">
                     <ul class="info-list">
@@ -33,13 +42,16 @@
                             <a href="{{ route('add_money') }}">
                                 <button type="submit" class="btn btn-light btn-replenish">Пополнить баланс</button>
                             </a>
-                            <form method="post" action="">
-                                <button type="button" class="btn btn-light">Перевести в доллары</button>
-                                <input type="hidden" name="user_id" value="{{$user['id'] }}">
-                            </form>
+                            <a href="{{ route('transfer') }}">
+                                <button type="submit" class="btn btn-light">Перевести в доллары</button>
+                            </a>
                         </li>
 
-                        <li class="info-list-item"><button type="button" class="btn btn-light">Перевести в евро</button></li>
+                        <li class="info-list-item"><form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                <button type="submit" class="btn btn-light">Выйти из аккаунта</button>
+                                @csrf
+                            </form></li>
+
                     </ul>
                 </div>
             </div>
@@ -67,17 +79,7 @@
                 </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('transaction') }}">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                         @csrf
-                        <input type="hidden" name="user_id" value="{{ $user['id'] }}">
                         <div class="form-group">
                             <label for="amount-transfer">Введите номер карты получателя</label>
                             <input type="text" class="form-control" id="amount-transfer" placeholder="Номер карты" name="card_id" value="{{ old('card_id') }}">

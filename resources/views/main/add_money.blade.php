@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <label for="sum_money">Сумма пополнения</label>
-            <input type="text" class="form-control" id="sum_money" placeholder="Номер карточки" name="money">
+            <input type="text" class="form-control" id="sum_money" placeholder="Сумма пополнения" name="money">
         </div>
         <div class="form-group">
             <label for="user_password">Password</label>

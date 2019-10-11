@@ -1,7 +1,7 @@
 @extends('main.layouts.header')
 
 @section('content')
-<form class="form-signin" method="post" action="{{route('sign_up_complete')}}">
+<form class="form-signin" method="post" action="{{route('edit_complete')}}">
     @csrf
     <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">Редактирование профиля</h1>
@@ -20,14 +20,9 @@
         <label class="email" for="email">Email address</label>
         <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{ $user['email']}}">
     </div>
-    <div class="form-group">
-        <label for="user_password">Password</label>
-        <input type="password" class="form-control" id="user_password" placeholder="Password" name="password" value="{{ $user['password']}}">
-    </div>
     <div class="mb-4">
-        <small class="form-text text-muted info-reg">При регистрации нового пользователя на вашем счету доступно 5000 грн</small>
         <button type="submit" class="btn btn-primary">Редактировать</button>
-        <a href="{{ route('sign_in') }}" class="registration-btn">Назад</a>
+        <a href="{{ route('cabinet') }}" class="registration-btn">Назад</a>
     </div>
 </form>
 @endsection

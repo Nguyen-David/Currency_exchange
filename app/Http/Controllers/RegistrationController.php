@@ -29,6 +29,7 @@ class RegistrationController extends Controller
             'password' => 'required|between:4,10'
         ];
 
+
         $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails())

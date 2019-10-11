@@ -111,6 +111,7 @@
       <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
       <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1RhsVz2kaO3YNwqwtAVeW4BbU7Z" />
@@ -156,7 +157,8 @@
       <workItem from="1570130691080" duration="8879000" />
       <workItem from="1570204233289" duration="18084000" />
       <workItem from="1570442273857" duration="101000" />
-      <workItem from="1570473077101" duration="19440000" />
+      <workItem from="1570473077101" duration="20329000" />
+      <workItem from="1570789766557" duration="16857000" />
     </task>
     <servers />
   </component>
