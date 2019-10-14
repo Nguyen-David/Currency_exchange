@@ -28,7 +28,6 @@ class TransactionController extends Controller
         $rules = [
             'card_id' => 'exists:card_user,card_id|between:4,4',
             'money_transfer' => 'max:'.$user->card->money.'|numeric',
-            'password' => 'exists:users,password',
         ];
 
         $validation = Validator::make($request->all(), $rules, $messages);

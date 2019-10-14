@@ -36,7 +36,7 @@
     <div class="mb-4">
         <small class="form-text text-muted info-reg">При регистрации нового пользователя на вашем счету доступно 5000 грн</small>
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-        <a href="{{ route('sign_in') }}" class="registration-btn">Вход</a>
+        <a href="{{ route('login') }}" class="registration-btn">Вход</a>
     </div>
 </form>
 @endsection

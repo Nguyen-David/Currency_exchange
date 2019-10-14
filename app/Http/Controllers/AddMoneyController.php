@@ -25,7 +25,7 @@ class AddMoneyController extends Controller
         ];
 
         $rules = [
-            'money' => 'max:100000',
+            'money' => 'max:100000|numeric',
             'password' => 'required|between:4,10',
 
         ];
@@ -39,7 +39,6 @@ class AddMoneyController extends Controller
                 $validation->errors()->add('password', 'Пароли не совпадают');
             });
         }
-
         if ($validation->fails())
         {
             return redirect()->route('add_money')->withErrors($validation)->withInput();

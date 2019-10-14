@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CardUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\Input;
 
@@ -44,7 +45,7 @@ class RegistrationController extends Controller
             $user->name = $request->name;
             $user->surname = $request->surname;
             $user->email = $request->email;
-            $user->password = $request->password;
+            $user->password = Hash::make($request->password);
             $user->save();
 
             $card = new CardUser;

@@ -17,13 +17,12 @@
 //Route::get('/', 'LoginController@show')->name('sign_in');
 //Route::post('/entry', 'EntranceController@entry')->name('entry');
 
-Route::get('/sign_up', function () {
-    return view('main\sign_up');
-})->name('sign_up');
+
 
 Route::post('/sign_up_complete', 'RegistrationController@addAccount')->name('sign_up_complete');
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
+
 //Route::post('auth/login', 'Auth\AuthController@postLogin');
 //Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
@@ -46,5 +45,8 @@ Route::group(['prefix'=>'cabinet','middleware' => 'auth'],function () {
 
 
 Auth::routes();
+Route::get('/sign_up', function () {
+    return view('main\sign_up');
+})->name('sign_up');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class TransferController extends Controller
@@ -15,20 +14,19 @@ class TransferController extends Controller
     }
 
     public function store(Request $request){
-
         $user = Auth::user();
 
         $messages = [
             'required' => 'Поле :attribute обязательно к заполнению!',
-            'money.max' => 'максимальное количество денег для пополнения :max',
+            'money.max' => 'максимальное количество денег для перевода :max',
         ];
 
         $rules = [
-            'money' => 'max:'. $user->card->money,
+            'money' => 'required|max:'. $user->card->money.'|numeric',
             'valute' => 'required',
         ];
-
         $validation = Validator::make($request->all(), $rules, $messages);
+
 
         if ($validation->fails())
         {
@@ -45,10 +43,13 @@ class TransferController extends Controller
 
         foreach ($result_currency as $k => $v){
             if($v->ccy == $request->valute) {
-               $res = $request->money/$v->buy ;
+               $res['value'] = $request->money/$v->buy ;
+               $res['valute'] = $v->ccy;
             }
         }
 
-        return redirect()->route('transfer')->with('result',round($res, 2));
+
+        return redirect()->route('transfer')->with('value',round($res['value'], 2))
+            ->with('valute',$res['valute']);
     }
 }

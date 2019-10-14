@@ -43,7 +43,7 @@
                                 <button type="submit" class="btn btn-light btn-replenish">Пополнить баланс</button>
                             </a>
                             <a href="{{ route('transfer') }}">
-                                <button type="submit" class="btn btn-light">Перевести в доллары</button>
+                                <button type="submit" class="btn btn-light">Перевести в другую валюту</button>
                             </a>
                         </li>
 
@@ -93,7 +93,7 @@
                             <input type="password" class="form-control" id="password" placeholder="Пароль" name="password" value="{{old('password')}}">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="commission" name="commision" @if(old('commission')) checked @endif>
+                            <input type="checkbox" class="form-check-input" id="commission" name="commision"  @if(old('commision')) checked @endif>
                             <label class="form-check-label" for="commission">Оплатить комисию за получателя</label>
                         </div>
                         <button type="submit" class="btn btn-primary btn-transfer">Перевести</button>
